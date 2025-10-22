@@ -12,17 +12,17 @@ type ImageToTextTaskRequest struct {
 }
 
 type NoCaptchaTaskProxylessRequest struct {
-	Type       string `json:"type"`
-	WebsiteURL string `json:"websiteURL"`
-	WebsiteKey string `json:"websiteKey"`
-	PageAction string `json:"pageAction"`
-}
-
-type RecaptchaV3TaskProxylessRequest struct {
 	Type        string `json:"type"`
 	WebsiteURL  string `json:"websiteURL"`
 	WebsiteKey  string `json:"websiteKey"`
 	IsInvisible bool   `json:"isInvisible"`
+}
+
+type RecaptchaV3TaskProxylessRequest struct {
+	Type       string `json:"type"`
+	WebsiteURL string `json:"websiteURL"`
+	WebsiteKey string `json:"websiteKey"`
+	PageAction string `json:"pageAction"`
 }
 
 type RecaptchaV2EnterpriseTaskProxylessRequest struct {
