@@ -3,11 +3,12 @@ package yescaptcha
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/deanxv/yescaptcha-go/req"
-	"github.com/deanxv/yescaptcha-go/res"
-	"github.com/deanxv/yescaptcha-go/url"
 	"io"
 	"net/http"
+
+	"github.com/WenXin0405/yescaptcha-go/req"
+	"github.com/WenXin0405/yescaptcha-go/res"
+	"github.com/WenXin0405/yescaptcha-go/url"
 )
 
 type Client struct {
