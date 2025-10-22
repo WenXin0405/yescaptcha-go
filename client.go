@@ -3,8 +3,10 @@ package yescaptcha
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"time"
 
 	"github.com/WenXin0405/yescaptcha-go/req"
 	"github.com/WenXin0405/yescaptcha-go/res"
@@ -156,6 +158,31 @@ func (c *Client) GetTaskResult(taskId string) (getTaskResultResponse res.GetTask
 	}
 	err = decodeResponse(resBytes, &getTaskResultResponse)
 	return
+}
+
+// 循环获取任务结果
+func (c *Client) GetTaskResultWithRetry(taskId string) (getTaskResultResponse res.GetTaskResultResponse, err error) {
+	ticker := time.NewTicker(3 * time.Second)
+	defer ticker.Stop()
+
+	timeout := time.After(120 * time.Second)
+
+	for {
+		select {
+		case <-timeout:
+			err = fmt.Errorf("get task result timeout after 120 seconds")
+			return
+		case <-ticker.C:
+			getTaskResultResponse, err = c.GetTaskResult(taskId)
+			if err != nil {
+				return getTaskResultResponse, err
+			}
+
+			if getTaskResultResponse.Status == "ready" {
+				return getTaskResultResponse, nil
+			}
+		}
+	}
 }
 
 // 查询开发者ID和金额 21585
